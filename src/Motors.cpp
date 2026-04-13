@@ -36,32 +36,33 @@ void Motors::setMotor(int in1, int speed, int pwm) {
     if (speed > 0) {
         digitalWrite(in1, HIGH); 
     } else {
-        digitalWrite(in1, LOW); 
+        digitalWrite(in1, HIGH); 
     }
-    analogWrite(pwm, abs(speed) * 2);
+    analogWrite(pwm, speed +127);
 } 
+
 void Motors::moveForward(int speed,int output) {
-    setMotor(MOTOR_FL_IN1, 0, MOTOR_FL_PWM);
-    setMotor(MOTOR_FR_IN1, speed+output, MOTOR_FR_PWM);
-    setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
-    setMotor(MOTOR_RR_IN1, speed-output, MOTOR_RR_PWM);
+    setMotor(MOTOR_FL_IN1, -(speed+output), MOTOR_FL_PWM);
+    setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
+    setMotor(MOTOR_RL_IN1, -(speed-output), MOTOR_RL_PWM);
+    setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
 }
 
-void Motors::moveBackward(int speed) {
+void Motors::moveBackward(int speed, int output) {
     setMotor(MOTOR_FL_IN1, 0, MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, -speed, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, -speed, MOTOR_RR_PWM);
 }
 
-void Motors::moveLeft(int speed) {
+void Motors::moveLeft(int speed, int output) {
     setMotor(MOTOR_FL_IN1, speed, MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, speed, MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
 }
 
-void Motors::moveRight(int speed) {
+void Motors::moveRight(int speed, int output) {
     setMotor(MOTOR_FL_IN1, -speed, MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, -speed, MOTOR_RL_PWM);
