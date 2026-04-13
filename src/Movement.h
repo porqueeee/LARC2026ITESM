@@ -12,10 +12,16 @@ public:
     void init();
     
     // Movimientos con corrección de rumbo
-    void moveForwardStraight(int speed);
-    void moveBackwardStraight(int speed);
-    void moveLeftStraight(int speed);
-    void moveRightStraight(int speed);
+    void moveForwardStraight(int speed, unsigned long time);
+    void moveBackwardStraight(int speed, unsigned long time);
+    void moveLeftStraight(int speed ,unsigned long time);
+    void moveRightStraight(int speed ,unsigned long time);
+
+    //Movimientos normales (para pruebas)
+    void moveForward(int speed, unsigned long time);
+    void moveBackward(int speed, unsigned long time);
+    void moveLeft(int speed ,unsigned long time);
+    void moveRight(int speed ,unsigned long time);
 
     // Movimiento siguiendo la línea
     void moveForwardWithLine(int speed);
