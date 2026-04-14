@@ -1,5 +1,6 @@
 #include "Line.h"
 
+LineSensor Line;
 
 void LineSensor::init(){
     pinMode(frontLeft,INPUT);
