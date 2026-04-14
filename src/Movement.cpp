@@ -1,5 +1,4 @@
 
-
 #include "Movement.h"
 
 
@@ -35,8 +34,8 @@ void Movement::setHeadingPIDGains(float kp, float ki, float kd) {
 }
 
 void Movement::updateTargetHeading() {
-    //targetHeading = imu.getHeading();
-    targetHeading=0;
+    targetHeading = imu.getHeading();
+    //targetHeading=0;
 }
 
 
@@ -59,7 +58,7 @@ int Movement::calculateHeadingCorrection() {
 //debería poder reemplaxar a calculateHeadingCorrection() sin problemas una vez calibrada.
 float Movement::calculateHeadingCorrectionPID() {
     float currentHeading = imu.getHeading();
-
+    // Le pasamos la lectura directa al PID, él se encarga de la matemática
     return headingPID.compute(currentHeading);
 }
 
@@ -68,13 +67,68 @@ float Movement::calculateHeadingCorrectionPID() {
 void Movement::moveForwardUntilBackLine(int speed) {
     headingPID.reset();
     while (true) {
-        if(Line.readLine(rearLeft)==true && Line.readLine(rearRight)==true){
+        if(Line.readLine(rearLeft)==true || Line.readLine(rearRight)==true){
+            Serial.print("yipee");
+            if (Line.readLine(rearLeft)==true){
+                Serial.print("Izquierda");
+                Serial.println(" ");
+            }
+            if (Line.readLine(rearRight)==true){
+                Serial.print("Derecha");
+                Serial.println(" ");
+            }
             break;
         }
-        float correction=calculateHeadingCorrectionPID();
-        motors.moveForward(speed, correction);
-        delay(10);
+        else{
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveForward(speed, correction);
+            delay(10);
+        }
     }
+    moveBackward(80,20);
+    motors.stop();
+}
+/*
+void Movement::moveRightUntilRightLine(int speed) {
+    headingPID.reset();
+    while (true) {
+        if(Line.readLine(frontRight)==true || Line.readLine(rearRight)==true){
+            Serial.print("yipee");
+            if (Line.readLine(rearRight)==true){
+                Serial.print("Rear");
+                Serial.println(" ");
+            }
+            if (Line.readLine(frontRight)==true){
+                Serial.print("Front");
+                Serial.println(" ");
+            }
+            break;
+        }
+        else{
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveForward(speed, correction);
+            delay(10);
+        }
+    }
+    moveBackward(80,20);
+    motors.stop();
+}
+    */
+void Movement::moveRightUntilRightLine(int speed) {
+    headingPID.reset();
+    updateTargetHeading();
+    while (true) {
+        if(Line.readLine(rearRight)==true){
+            Serial.print("yipee");
+            break;
+        }
+        else{
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveRight(speed, correction);
+            delay(10);
+        }
+    }
+    moveBackward(80,20);
     motors.stop();
 }
 
@@ -87,7 +141,7 @@ void Movement::moveForwardStraight(int speed, unsigned long time) {
         motors.moveForward(speed, correction);
         delay(10);
     }
-    motors.stop();
+    stop();
 }
 
 void Movement::moveBackwardStraight(int speed, unsigned long time) {

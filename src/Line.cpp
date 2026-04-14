@@ -1,6 +1,6 @@
 #include "Line.h"
 
-
+LineSensor Line;
 void LineSensor::init(){
     pinMode(frontLeft,INPUT);
     pinMode(frontRight,INPUT);
@@ -9,8 +9,9 @@ void LineSensor::init(){
 }
 
 bool LineSensor::readLine(int pin){
-    line=analogRead(pin);
+    line=analogRead(pin); 
     if(line>LINE_THRESHOLD){
+        Serial.print("Línea detectada");
         return true;
     }
     else{

@@ -33,7 +33,7 @@
 #define rearLeft A3
 #define rearRight A4
 // Sensores de línea
-#define LINE_THRESHOLD 200
+#define LINE_THRESHOLD 150
 #define LINE_DETECTED true
 #define LINE_NOT_DETECTED false
 
@@ -109,9 +109,11 @@
 // ============================================
 // ESTADOS DEL ROBOT
 // ============================================
+*/
 enum RobotState {
     INIT,
     EXIT_BOX,
+    ALLING_RIGHT,
     NAVIGATE_TO_TREEZONE,
     COLLECT_LINE,
     RETURN_TO_BASE,
@@ -119,7 +121,7 @@ enum RobotState {
     COMPLETE,
     ERROR
 };
-
+/*
 // ============================================
 // TIPOS DE GRANOS
 // ============================================

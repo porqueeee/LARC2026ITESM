@@ -1,4 +1,4 @@
-#include "motors.h"
+#include "Motors.h"
 
 Motors motors;
 
@@ -64,9 +64,9 @@ void Motors::moveLeft(int speed, int output) {
 }
 
 void Motors::moveRight(int speed, int output) {
-    setMotor(MOTOR_FL_IN1, -(speed-output), MOTOR_FL_PWM);
+    setMotor(MOTOR_FL_IN1, -(speed+output), MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
-    setMotor(MOTOR_RL_IN1, -(speed+output), MOTOR_RL_PWM);
+    setMotor(MOTOR_RL_IN1, -(speed-output), MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
 }
 
