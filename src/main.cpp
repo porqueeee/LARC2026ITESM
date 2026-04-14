@@ -3,6 +3,7 @@
 #include "Movement.h"
 #include "PID.h"
 #include "SensorColor.h"
+#include "Line.h"
 
 //Todo lo del movimiento - Movement incluye PID, Motors, IMU y config
 Movement robot; //Crea un objeto de la clase Movement  
@@ -16,7 +17,10 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Comunicación serial iniciada");
     robot.init(); //inicializa motores, pid y IMU  
-    robot.moveForwardStraight(100,5000);
+    robot.moveForwardUntilBackLine(100);
+    Serial.print("Línea encontrada");
+
+
     //robot.moveRightStraight(100,2000);
     //robot.moveForwardStraight(100,2000);
     //robot.moveLeftStraight(100,200);

@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+
+
 // ============================================
 // PINES DE MOTORES
 // ============================================
@@ -26,8 +28,14 @@
 // ============================================
 // PINES DE SENSOR DE LÍNEA (TCRT5000)
 // ============================================
-#define LINE_FRONT_LEFT A0
-
+#define frontLeft A1
+#define frontRight A2
+#define rearLeft A3
+#define rearRight A4
+// Sensores de línea
+#define LINE_THRESHOLD 200
+#define LINE_DETECTED true
+#define LINE_NOT_DETECTED false
 
 /* ============================================
 // PINES DE SERVOS (via PCA9685)
@@ -47,11 +55,7 @@
 // ============================================
 // CONSTANTES DE CALIBRACIÓN
 // ============================================
-// Sensores de línea
-#define LINE_THRESHOLD 500
-#define LINE_DETECTED true
-#define LINE_NOT_DETECTED false
-*/
+
 
 // Velocidades
 #define BASE_SPEED 100
@@ -135,5 +139,6 @@ enum Direction {
     LEFT,
     RIGHT
 };
+*/
 
 #endif

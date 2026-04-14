@@ -1,12 +1,17 @@
+
+
 #include "Movement.h"
+
 
 Movement movement;
 extern IMU imu;  
+extern LineSensor Line;
 
 void Movement::init() {
     // 1. Inicializar periféricos primero
     motors.init();
     imu.init(); 
+    Line.init();
     
     // 2. Inicializar PID de rumbo
     // Kp, Ki, Kd, OutputMin, OutputMax
@@ -59,10 +64,21 @@ float Movement::calculateHeadingCorrectionPID() {
 }
 
 
-//Todas estas funciones se mueven por 5 segundos, le quiero cambiar para que el tiempo sea configurable
-//La velocidad de las llantas también afecta cuanto tardas en llegar a un lugar, podría intentar usar el acelerómetro 
-//calibrar el tiempo con base a la velocidad o ignorar el problema y depender de los ultrasónicos como paro de emergencia
+//PID +  DETECCIÓN DE LÍNEA
+void Movement::moveForwardUntilBackLine(int speed) {
+    headingPID.reset();
+    while (true) {
+        if(Line.readLine(rearLeft)==true && Line.readLine(rearRight)==true){
+            break;
+        }
+        float correction=calculateHeadingCorrectionPID();
+        motors.moveForward(speed, correction);
+        delay(10);
+    }
+    motors.stop();
+}
 
+//PID INTEGRADO :) Hasta el momento con kp=4 ki=0 y kd=0
 void Movement::moveForwardStraight(int speed, unsigned long time) {
     headingPID.reset();
     unsigned long startTime = millis();
@@ -74,7 +90,6 @@ void Movement::moveForwardStraight(int speed, unsigned long time) {
     motors.stop();
 }
 
-
 void Movement::moveBackwardStraight(int speed, unsigned long time) {
     headingPID.reset();
     unsigned long startTime = millis();
@@ -85,7 +100,6 @@ void Movement::moveBackwardStraight(int speed, unsigned long time) {
     }
     motors.stop();
 }
-
 
 void Movement::moveLeftStraight(int speed, unsigned long time) {
     headingPID.reset();
@@ -148,24 +162,6 @@ void Movement::moveRight(int speed, unsigned long time) {
     motors.stop();
 }  
 
-/*
-void Movement::moveRightStraightPID(int speed) {
-    updateTargetHeading();
-    headingPID.setSetpoint(0);
-    headingPID.reset();
-    
-    unsigned long startTime = millis();
-    
-    while (millis() - startTime < 6000) {
-        sensors.updateAll();
-        
-        float correction = calculateHeadingCorrectionPID();
-        motors.moveDirection(speed, 0, (int)correction);
-        delay(10);
-    }
-    motors.stop();
-}
-*/
 
 void Movement::stop() {
     motors.stop();
