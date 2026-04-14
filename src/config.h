@@ -16,11 +16,11 @@
 
 // Motor Rear Left
 #define MOTOR_RL_IN1 26
-#define MOTOR_RL_PWM 4
+#define MOTOR_RL_PWM 6
 
 // Motor Rear Right
 #define MOTOR_RR_IN1 28
-#define MOTOR_RR_PWM 5
+#define MOTOR_RR_PWM 7
 
 
 // ============================================

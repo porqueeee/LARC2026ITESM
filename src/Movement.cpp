@@ -11,7 +11,8 @@ void Movement::init() {
     // 2. Inicializar PID de rumbo
     // Kp, Ki, Kd, OutputMin, OutputMax
     //Definición del PID:
-    headingPID = PID(2.0, 0.0, 0.0, -80, 80);
+    headingPID = PID(4.0, 0.0, 0.0, -50, 50);
+    headingPID.setSetpoint(0);
     
     // 3. Fijar el setpoint inicial
     updateTargetHeading();
@@ -53,13 +54,8 @@ int Movement::calculateHeadingCorrection() {
 //debería poder reemplaxar a calculateHeadingCorrection() sin problemas una vez calibrada.
 float Movement::calculateHeadingCorrectionPID() {
     float currentHeading = imu.getHeading();
-    float error = targetHeading - currentHeading;
-    
-    // Normalizar error a -180 a 180
-    if (error > 180) error -= 360;
-    if (error < -180) error += 360;
-    
-    return headingPID.compute(error);
+
+    return headingPID.compute(currentHeading);
 }
 
 
@@ -68,19 +64,23 @@ float Movement::calculateHeadingCorrectionPID() {
 //calibrar el tiempo con base a la velocidad o ignorar el problema y depender de los ultrasónicos como paro de emergencia
 
 void Movement::moveForwardStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        float correction=calculateHeadingCorrection();
+        float correction=calculateHeadingCorrectionPID();
         motors.moveForward(speed, correction);
         delay(10);
     }
     motors.stop();
 }
 
+
 void Movement::moveBackwardStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        motors.moveBackward(speed,calculateHeadingCorrectionPID());
+        float correction=calculateHeadingCorrectionPID();
+        motors.moveBackward(speed, correction);
         delay(10);
     }
     motors.stop();
@@ -88,18 +88,22 @@ void Movement::moveBackwardStraight(int speed, unsigned long time) {
 
 
 void Movement::moveLeftStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        motors.moveLeft(speed,calculateHeadingCorrectionPID());
+        float correction=calculateHeadingCorrectionPID();
+        motors.moveLeft(speed,correction);
         delay(10);
     }
     motors.stop();
 }
 
 void Movement::moveRightStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
-    while (millis() - startTime < 5000) {
-        motors.moveRight(speed,calculateHeadingCorrectionPID());
+    while (millis() - startTime < time) {
+        float correction=calculateHeadingCorrectionPID();
+        motors.moveRight(speed,correction);
         delay(10);
     }
     motors.stop();
@@ -111,7 +115,7 @@ void Movement::moveRightStraight(int speed, unsigned long time) {
 void Movement::moveForward(int speed, unsigned long time) {
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        motors.moveForward(speed, 0);
+        motors.moveForward(speed, calculateHeadingCorrection());
         delay(10);
     }
     motors.stop();
