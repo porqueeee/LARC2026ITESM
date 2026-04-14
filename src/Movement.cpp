@@ -1,17 +1,22 @@
+
 #include "Movement.h"
+
 
 Movement movement;
 extern IMU imu;  
+extern LineSensor Line;
 
 void Movement::init() {
     // 1. Inicializar periféricos primero
     motors.init();
     imu.init(); 
+    Line.init();
     
     // 2. Inicializar PID de rumbo
     // Kp, Ki, Kd, OutputMin, OutputMax
     //Definición del PID:
-    headingPID = PID(2.0, 0.0, 0.0, -80, 80);
+    headingPID = PID(4.0, 0.0, 0.0, -50, 50);
+    headingPID.setSetpoint(0);
     
     // 3. Fijar el setpoint inicial
     updateTargetHeading();
@@ -29,8 +34,8 @@ void Movement::setHeadingPIDGains(float kp, float ki, float kd) {
 }
 
 void Movement::updateTargetHeading() {
-    //targetHeading = imu.getHeading();
-    targetHeading=0;
+    targetHeading = imu.getHeading();
+    //targetHeading=0;
 }
 
 
@@ -53,53 +58,120 @@ int Movement::calculateHeadingCorrection() {
 //debería poder reemplaxar a calculateHeadingCorrection() sin problemas una vez calibrada.
 float Movement::calculateHeadingCorrectionPID() {
     float currentHeading = imu.getHeading();
-    float error = targetHeading - currentHeading;
-    
-    // Normalizar error a -180 a 180
-    if (error > 180) error -= 360;
-    if (error < -180) error += 360;
-    
-    return headingPID.compute(error);
+    // Le pasamos la lectura directa al PID, él se encarga de la matemática
+    return headingPID.compute(currentHeading);
 }
 
 
-//Todas estas funciones se mueven por 5 segundos, le quiero cambiar para que el tiempo sea configurable
-//La velocidad de las llantas también afecta cuanto tardas en llegar a un lugar, podría intentar usar el acelerómetro 
-//calibrar el tiempo con base a la velocidad o ignorar el problema y depender de los ultrasónicos como paro de emergencia
+//PID +  DETECCIÓN DE LÍNEA
+void Movement::moveForwardUntilBackLine(int speed) {
+    headingPID.reset();
+    while (true) {
+        if(Line.readLine(rearLeft)==true || Line.readLine(rearRight)==true){
+            Serial.print("yipee");
+            if (Line.readLine(rearLeft)==true){
+                Serial.print("Izquierda");
+                Serial.println(" ");
+            }
+            if (Line.readLine(rearRight)==true){
+                Serial.print("Derecha");
+                Serial.println(" ");
+            }
+            break;
+        }
+        else{
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveForward(speed, correction);
+            delay(10);
+        }
+    }
+    moveBackward(80,20);
+    motors.stop();
+}
+/*
+void Movement::moveRightUntilRightLine(int speed) {
+    headingPID.reset();
+    while (true) {
+        if(Line.readLine(frontRight)==true || Line.readLine(rearRight)==true){
+            Serial.print("yipee");
+            if (Line.readLine(rearRight)==true){
+                Serial.print("Rear");
+                Serial.println(" ");
+            }
+            if (Line.readLine(frontRight)==true){
+                Serial.print("Front");
+                Serial.println(" ");
+            }
+            break;
+        }
+        else{
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveForward(speed, correction);
+            delay(10);
+        }
+    }
+    moveBackward(80,20);
+    motors.stop();
+}
+    */
+void Movement::moveRightUntilRightLine(int speed) {
+    headingPID.reset();
+    updateTargetHeading();
+    while (true) {
+        if(Line.readLine(rearRight)==true){
+            Serial.print("yipee");
+            break;
+        }
+        else{
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveRight(speed, correction);
+            delay(10);
+        }
+    }
+    moveBackward(80,20);
+    motors.stop();
+}
 
+//PID INTEGRADO :) Hasta el momento con kp=4 ki=0 y kd=0
 void Movement::moveForwardStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        float correction=calculateHeadingCorrection();
+        float correction=calculateHeadingCorrectionPID();
         motors.moveForward(speed, correction);
         delay(10);
     }
-    motors.stop();
+    stop();
 }
 
 void Movement::moveBackwardStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        motors.moveBackward(speed,calculateHeadingCorrectionPID());
+        float correction=calculateHeadingCorrectionPID();
+        motors.moveBackward(speed, correction);
         delay(10);
     }
     motors.stop();
 }
 
-
 void Movement::moveLeftStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        motors.moveLeft(speed,calculateHeadingCorrectionPID());
+        float correction=calculateHeadingCorrectionPID();
+        motors.moveLeft(speed,correction);
         delay(10);
     }
     motors.stop();
 }
 
 void Movement::moveRightStraight(int speed, unsigned long time) {
+    headingPID.reset();
     unsigned long startTime = millis();
-    while (millis() - startTime < 5000) {
-        motors.moveRight(speed,calculateHeadingCorrectionPID());
+    while (millis() - startTime < time) {
+        float correction=calculateHeadingCorrectionPID();
+        motors.moveRight(speed,correction);
         delay(10);
     }
     motors.stop();
@@ -111,7 +183,7 @@ void Movement::moveRightStraight(int speed, unsigned long time) {
 void Movement::moveForward(int speed, unsigned long time) {
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
-        motors.moveForward(speed, 0);
+        motors.moveForward(speed, calculateHeadingCorrection());
         delay(10);
     }
     motors.stop();
@@ -144,24 +216,6 @@ void Movement::moveRight(int speed, unsigned long time) {
     motors.stop();
 }  
 
-/*
-void Movement::moveRightStraightPID(int speed) {
-    updateTargetHeading();
-    headingPID.setSetpoint(0);
-    headingPID.reset();
-    
-    unsigned long startTime = millis();
-    
-    while (millis() - startTime < 6000) {
-        sensors.updateAll();
-        
-        float correction = calculateHeadingCorrectionPID();
-        motors.moveDirection(speed, 0, (int)correction);
-        delay(10);
-    }
-    motors.stop();
-}
-*/
 
 void Movement::stop() {
     motors.stop();

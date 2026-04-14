@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+
+
 // ============================================
 // PINES DE MOTORES
 // ============================================
@@ -16,18 +18,24 @@
 
 // Motor Rear Left
 #define MOTOR_RL_IN1 26
-#define MOTOR_RL_PWM 4
+#define MOTOR_RL_PWM 6
 
 // Motor Rear Right
 #define MOTOR_RR_IN1 28
-#define MOTOR_RR_PWM 5
+#define MOTOR_RR_PWM 7
 
 
 // ============================================
 // PINES DE SENSOR DE LÍNEA (TCRT5000)
 // ============================================
-#define LINE_FRONT_LEFT A0
-
+#define frontLeft A1
+#define frontRight A2
+#define rearLeft A3
+#define rearRight A4
+// Sensores de línea
+#define LINE_THRESHOLD 150
+#define LINE_DETECTED true
+#define LINE_NOT_DETECTED false
 
 /* ============================================
 // PINES DE SERVOS (via PCA9685)
@@ -47,11 +55,7 @@
 // ============================================
 // CONSTANTES DE CALIBRACIÓN
 // ============================================
-// Sensores de línea
-#define LINE_THRESHOLD 500
-#define LINE_DETECTED true
-#define LINE_NOT_DETECTED false
-*/
+
 
 // Velocidades
 #define BASE_SPEED 100
@@ -105,9 +109,11 @@
 // ============================================
 // ESTADOS DEL ROBOT
 // ============================================
+*/
 enum RobotState {
     INIT,
     EXIT_BOX,
+    ALLING_RIGHT,
     NAVIGATE_TO_TREEZONE,
     COLLECT_LINE,
     RETURN_TO_BASE,
@@ -115,7 +121,7 @@ enum RobotState {
     COMPLETE,
     ERROR
 };
-
+/*
 // ============================================
 // TIPOS DE GRANOS
 // ============================================
@@ -135,5 +141,6 @@ enum Direction {
     LEFT,
     RIGHT
 };
+*/
 
 #endif
