@@ -8,6 +8,7 @@ class LineSensor{
     void init();
     bool readLine(int pin);
     int line;
+    float readDistance(int trig, int echo);
 
 };
 

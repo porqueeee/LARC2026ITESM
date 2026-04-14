@@ -42,6 +42,7 @@ void Motors::setMotor(int in1, int speed, int pwm) {
     
 } 
 
+//Está bien
 void Motors::moveForward(int speed,int output) {
     setMotor(MOTOR_FL_IN1, 0, MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, (speed+output), MOTOR_FR_PWM);
@@ -56,13 +57,15 @@ void Motors::moveBackward(int speed, int output) {
     setMotor(MOTOR_RR_IN1, -(speed+output), MOTOR_RR_PWM);
 }
 
+//mal
 void Motors::moveLeft(int speed, int output) {
-    setMotor(MOTOR_FL_IN1, (speed+output), MOTOR_FL_PWM);
+    setMotor(MOTOR_FL_IN1, (speed-output), MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, (speed+output), MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
 }
 
+//Ya está bien
 void Motors::moveRight(int speed, int output) {
     setMotor(MOTOR_FL_IN1, -(speed+output), MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);

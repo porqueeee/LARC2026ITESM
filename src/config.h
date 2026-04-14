@@ -26,7 +26,7 @@
 
 
 // ============================================
-// PINES DE SENSOR DE LÍNEA (TCRT5000)
+// PSENSOR DE LÍNEA (TCRT5000)
 // ============================================
 #define frontLeft A1
 #define frontRight A2
@@ -36,6 +36,14 @@
 #define LINE_THRESHOLD 150
 #define LINE_DETECTED true
 #define LINE_NOT_DETECTED false
+
+
+// ============================================
+// SENSOR ULTRASÓNICO
+// ============================================
+#define FL_TRIG 12
+#define FL_ECHO 13
+#define DIST_THRESHOLD 40
 
 /* ============================================
 // PINES DE SERVOS (via PCA9685)
@@ -114,7 +122,7 @@ enum RobotState {
     INIT,
     EXIT_BOX,
     ALLING_RIGHT,
-    NAVIGATE_TO_TREEZONE,
+    CLEAR_OBSTACLES,
     COLLECT_LINE,
     RETURN_TO_BASE,
     DEPOSIT_BEANS,

@@ -31,6 +31,8 @@ public:
     void moveRightUntilRightLine(int speed);
     void moveLeftUntilLeftLine(int speed);
 
+    void moveLeftUntilClear(int speed);
+
     /* Movimiento siguiendo la línea
     void moveForwardWithLine(int speed);
     void moveBackwardWithLine(int speed);

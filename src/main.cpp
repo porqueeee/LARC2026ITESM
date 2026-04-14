@@ -46,6 +46,10 @@ void RunRobot(){
 
         case ALLING_RIGHT:
             robot.moveRightUntilRightLine(80);
+            currentState=CLEAR_OBSTACLES;
+
+        case CLEAR_OBSTACLES:
+            robot.moveLeftUntilClear(80);
             currentState=COMPLETE;
         case COMPLETE:
             robot.stop();
@@ -56,6 +60,9 @@ void RunRobot(){
 }
 void loop() {
     
-    RunRobot();
+    //RunRobot();
+    //robot.moveLeftUntilClear(80);
+    robot.moveLeftUntilClear(80);
+    delay(100000);
 
 }

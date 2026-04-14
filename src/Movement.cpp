@@ -1,7 +1,5 @@
 
 #include "Movement.h"
-
-
 Movement movement;
 extern IMU imu;  
 extern LineSensor Line;
@@ -128,8 +126,25 @@ void Movement::moveRightUntilRightLine(int speed) {
             delay(10);
         }
     }
-    moveBackward(80,20);
+    moveLeft(80,20);
     motors.stop();
+}
+
+void Movement::moveLeftUntilClear(int speed){
+    // no lleva delay porque leer el ultrasónico es muy tardado
+    headingPID.reset();
+    updateTargetHeading();
+    while(true){
+        if(Line.readDistance(FL_TRIG,FL_ECHO)<DIST_THRESHOLD){
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveLeft(speed, correction);
+            Serial.print("Caja detectada");
+        }
+        else{
+            break;
+        }
+    }
+    stop();
 }
 
 //PID INTEGRADO :) Hasta el momento con kp=4 ki=0 y kd=0
