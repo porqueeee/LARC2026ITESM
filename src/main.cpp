@@ -34,22 +34,21 @@ void RunRobot(){
     switch(currentState) {
         case INIT:
             currentState = EXIT_BOX;
-
             break;
 
         case EXIT_BOX:
 
-            robot.moveForwardUntilBackLine(80);
+            robot.moveForwardUntilBackLine(100);
             delay(1500);
             currentState = ALLING_RIGHT;
             break;
 
         case ALLING_RIGHT:
-            robot.moveRightUntilRightLine(80);
+            robot.moveRightUntilRightLine(100);
             currentState=CLEAR_OBSTACLES;
 
         case CLEAR_OBSTACLES:
-            robot.moveLeftUntilClear(80);
+            robot.moveLeftUntilClear(100);
             currentState=COMPLETE;
         case COMPLETE:
             robot.stop();
@@ -62,7 +61,8 @@ void loop() {
     
     //RunRobot();
     //robot.moveLeftUntilClear(80);
-    robot.moveLeftUntilClear(80);
-    delay(100000);
+    //robot.moveRightUntilRightLine(100);
+    robot.moveLeftStraight(100,1000);
+    delay(10000000);
 
 }

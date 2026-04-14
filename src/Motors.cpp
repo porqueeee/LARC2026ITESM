@@ -47,7 +47,7 @@ void Motors::moveForward(int speed,int output) {
     setMotor(MOTOR_FL_IN1, 0, MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, (speed+output), MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
-    setMotor(MOTOR_RR_IN1, (speed-(output)), MOTOR_RR_PWM);
+    setMotor(MOTOR_RR_IN1, (speed-output), MOTOR_RR_PWM);
 }
 
 void Motors::moveBackward(int speed, int output) {

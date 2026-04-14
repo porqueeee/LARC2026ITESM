@@ -38,7 +38,7 @@ void Movement::updateTargetHeading() {
 
 
 //control proporcional, todo se hace en esta función
-int Movement::calculateHeadingCorrection() {
+/*int Movement::calculateHeadingCorrection() {
     float currentHeading = imu.getHeading();
     float error = targetHeading - currentHeading;
     
@@ -47,9 +47,9 @@ int Movement::calculateHeadingCorrection() {
     if (error < -180) error += 360;
     
     // PID simple (solo proporcional)
-    int correction = (int)(error * 4.0); // Kp = 2.0
+    int correction = (int)(error * 4.0); //Control con KP
     return constrain(correction, -50, 50);
-}
+}*/
 
 // NUEVA FUNCIÓN: Corrección PID completa - se guarda en PID.h y PID.cpp
 //trabaja con los mismos datos, pero agrega el control integral y derivado.
@@ -65,13 +65,16 @@ float Movement::calculateHeadingCorrectionPID() {
 void Movement::moveForwardUntilBackLine(int speed) {
     headingPID.reset();
     while (true) {
-        if(Line.readLine(rearLeft)==true || Line.readLine(rearRight)==true){
+        bool left = Line.readLine(rearLeft);
+        bool right = Line.readLine(rearRight);
+
+        if(left || right){
             Serial.print("yipee");
-            if (Line.readLine(rearLeft)==true){
+            if (left){
                 Serial.print("Izquierda");
                 Serial.println(" ");
             }
-            if (Line.readLine(rearRight)==true){
+            if (right){
                 Serial.print("Derecha");
                 Serial.println(" ");
             }
@@ -135,10 +138,9 @@ void Movement::moveLeftUntilClear(int speed){
     headingPID.reset();
     updateTargetHeading();
     while(true){
-        if(Line.readDistance(FL_TRIG,FL_ECHO)<DIST_THRESHOLD){
-            float correction=calculateHeadingCorrectionPID();
-            motors.moveLeft(speed, correction);
-            Serial.print("Caja detectada");
+        stop(); //Detiene los motores
+        if(Line.readDistance(FL_TRIG,FL_ECHO)<DIST_THRESHOLD){ //Lee el sensor ultrasónico
+            moveLeftStraight(100,500); //Se mueve con PID por cantidad de tiempo
         }
         else{
             break;
@@ -150,6 +152,7 @@ void Movement::moveLeftUntilClear(int speed){
 //PID INTEGRADO :) Hasta el momento con kp=4 ki=0 y kd=0
 void Movement::moveForwardStraight(int speed, unsigned long time) {
     headingPID.reset();
+    updateTargetHeading();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
         float correction=calculateHeadingCorrectionPID();
@@ -161,6 +164,7 @@ void Movement::moveForwardStraight(int speed, unsigned long time) {
 
 void Movement::moveBackwardStraight(int speed, unsigned long time) {
     headingPID.reset();
+    updateTargetHeading();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
         float correction=calculateHeadingCorrectionPID();
@@ -172,6 +176,7 @@ void Movement::moveBackwardStraight(int speed, unsigned long time) {
 
 void Movement::moveLeftStraight(int speed, unsigned long time) {
     headingPID.reset();
+    updateTargetHeading();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
         float correction=calculateHeadingCorrectionPID();
@@ -183,6 +188,7 @@ void Movement::moveLeftStraight(int speed, unsigned long time) {
 
 void Movement::moveRightStraight(int speed, unsigned long time) {
     headingPID.reset();
+    updateTargetHeading();
     unsigned long startTime = millis();
     while (millis() - startTime < time) {
         float correction=calculateHeadingCorrectionPID();
@@ -224,7 +230,7 @@ void Movement::moveLeft(int speed, unsigned long time) {
 
 void Movement::moveRight(int speed, unsigned long time) {
     unsigned long startTime = millis();
-    while (millis() - startTime < 5000) {
+    while (millis() - startTime < time) {
         motors.moveRight(speed,0);
         delay(10);
     }
