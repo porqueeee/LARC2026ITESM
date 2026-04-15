@@ -5,65 +5,64 @@
 #include "IMU.h"
 #include "PID.h"  
 #include "config.h"
+#include "Line.h"
+#include "Selector.h"
+#include "SensorColor.h"
+#include "Distance.h"
+
+//Todas las funciones de movimiento terminan con un stop() de esta misma clase que llama al motors.stop()
 
 class Movement {
 public:
     Movement() : targetHeading(0), headingPID(1.0, 0.0, 0.0, -100, 100) {}  // Inicializar PID con valores por defecto
     void init();
     
-    // Movimientos con corrección de rumbo
-    void moveForwardStraight(int speed);
-    void moveBackwardStraight(int speed);
-    void moveLeftStraight(int speed);
-    void moveRightStraight(int speed);
+    // Movimientos con corrección por PID, dependen del tiempo
+    //El PID se resetea y también el target heading
+    void moveForwardStraight(int speed, unsigned long time);
+    void moveBackwardStraight(int speed, unsigned long time);
+    void moveLeftStraight(int speed ,unsigned long time);
+    void moveRightStraight(int speed ,unsigned long time);
 
-    // Movimiento siguiendo la línea
-    void moveForwardWithLine(int speed);
-    void moveBackwardWithLine(int speed);
-    void moveLeftWithLine(int speed);
-    void moveRightWithLine(int speed);
-
-    void moveForwardUntilBackLine(int speed);
-    void moveBackwardUntilFrontLine(int speed);
-    void moveRightUntilRightLineFollowingLine(int speed);
-    void moveForwardUntilFrontLineFollowingLine(int speed);
-    void moveLeftUntilLeftLineFollowingLine(int speed);
-    void moveBackwardUntilBackLineFollowingLine(int speed);
-
-    void moveRightUntilRightLine(int speed);
-    void moveLeftUntilLeftLine(int speed);
+    //Movimientos normales (para pruebas), llaman a las funciones de Motors por una cantidad 
+    //fija de tiempo , no tiene ninguna clase de corrección
+    void moveForward(int speed, unsigned long time);
+    void moveBackward(int speed, unsigned long time);
+    void moveLeft(int speed ,unsigned long time);
+    void moveRight(int speed ,unsigned long time);
     
-    // Movimientos con PID (más suave)
-    void moveForwardStraightPID(int speed);
-    void moveBackwardStraightPID(int speed);
-    void moveLeftStraightPID(int speed);
-    void moveRightStraightPID(int speed);
+    //Movimientos con corrección por PID, dependiente del sensor de línea
+    void moveForwardUntilBackLine(int speed);
 
-    // Rodear alberca
-    void moveLeftUntilObstacleClear(int speed);
-    void moveRightUntilObstacleClear(int speed);
-    void moveForwardUntilObstacleClear(int speed);
-    void moveBackwardUntilObstacleClear(int speed);
+    //Movimiento a la izquierda con corrección por PID, se detiene cuando esquiva un objeto
+    void moveLeftUntilClear(int speed);
 
-    // Moverte al siguiente grano de café
-    // siguiendo la línea
-    void moveToNextBean(int speed, int level=1);
+    //Movimiento a la derecha con corrección por PID, 
+    void moveRightUntilRightLine(int speed);
 
-    //Moverte a las cajas de depósito
-    void moveToDepositBox(int speed, int boxNumber);
+    //Movimiento hacia enfrente para llegar al árbol
+    void moveForwardUntilFrontLine(int speed);
+
+    void agarrarGrano();
 
     // Parada
     void stop();
     
     // Configuración PID
     void setHeadingPIDGains(float kp, float ki, float kd);  // NUEVO
+
+    void evilstop(int speed);
     
 private:
     float targetHeading;
     PID headingPID;  // NUEVO
     
+
+    //Define el ángulo actual como el nuevo "heading"
     void updateTargetHeading();
-    int calculateHeadingCorrection();
+    //int calculateHeadingCorrection();
+
+    //Llama al PID y calcula un offset para la velocidad
     float calculateHeadingCorrectionPID();  // NUEVO
 };
 

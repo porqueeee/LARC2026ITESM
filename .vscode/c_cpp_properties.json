@@ -1,0 +1,68 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/Users/alanmeade/Desktop/LARC2026ITESM/include",
+                "/Users/alanmeade/Desktop/LARC2026ITESM/src",
+                "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Servo/src",
+                "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055",
+                "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055/utility",
+                "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit Unified Sensor",
+                "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit TCS34725",
+                "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BusIO",
+                "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "/Users/alanmeade/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "/Users/alanmeade/.platformio/packages/framework-arduino-avr/variants/mega",
+                "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/include",
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/src",
+                    "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Servo/src",
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055",
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055/utility",
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit Unified Sensor",
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit TCS34725",
+                    "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BusIO",
+                    "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "/Users/alanmeade/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "/Users/alanmeade/.platformio/packages/framework-arduino-avr/variants/mega",
+                    "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60119",
+                "ARDUINO_AVR_MEGA2560",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega2560__",
+                ""
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "compilerPath": "/Users/alanmeade/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega2560",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
