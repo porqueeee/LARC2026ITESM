@@ -37,17 +37,19 @@ void RunRobot(){
             break;
 
         case EXIT_BOX:
-
+            Serial.print("Exit Box");
             robot.moveForwardUntilBackLine(100);
             delay(1500);
             currentState = ALLING_RIGHT;
             break;
 
         case ALLING_RIGHT:
+            Serial.print("Allign Right");
             robot.moveRightUntilRightLine(defaultspeed);
             currentState=CLEAR_OBSTACLES;
 
         case CLEAR_OBSTACLES:
+            Serial.print("Clear obstacles");
             robot.moveLeftUntilClear(defaultspeed);
             currentState=COMPLETE;
         case COMPLETE:
@@ -87,7 +89,9 @@ void loop() {
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
     //robot.moveLeftStraight(defaultspeed,1000);
-    TestSquareStraight();
+    //TestSquareStraight();
+    robot.moveLeftUntilClear(defaultspeed);
+    Serial.print("Clear! :)");
     delay(1000);
 
 }

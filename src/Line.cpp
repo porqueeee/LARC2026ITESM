@@ -44,6 +44,8 @@ bool LineSensor::readDistance(int trig, int echo){
          
     }
     d = (t/10)/58; 
+    Serial.print("Dist: ");
+    Serial.println(d);
     return (d<DIST_THRESHOLD);
 
     

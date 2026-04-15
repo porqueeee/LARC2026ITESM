@@ -15,6 +15,7 @@ public:
     void moveBackward(int speed, int output);
     void moveLeft(int speed, int output);
     void moveRight(int speed, int output);
+    void print(int speed, int output);
     void stop();
     
 private:

@@ -22,6 +22,6 @@ void IMU::init() {
 
 int IMU::getHeading() {
     int heading=bno.getRLHeadingAuto(100);
-    Serial.println(heading);
+    //Serial.println(heading);
     return heading; //el 100 es la dirección física de los offsets generados durante la calibración
 }
