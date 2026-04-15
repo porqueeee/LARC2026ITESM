@@ -106,9 +106,9 @@ void loop() {
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
     //robot.moveLeftStraight(defaultspeed,1000);
-    //TestSquare();
+    TestSquare();
     //robot.moveLeftUntilClear(defaultspeed);
     //Serial.print("Clear! :)");
     //delay(1000);
-    robot.evilstop(-defaultspeed);
+    //robot.evilstop(defaultspeed);
 }

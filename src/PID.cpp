@@ -1,7 +1,7 @@
 #include "PID.h"
 
 PID::PID() : PID(4.0, 0.0, 0.0, -50, 50) {
-    // Constructor por defecto con ganancias Kp=1, Ki=0, Kd=0 y límites de salida -100 a 100
+    // Constructor por defecto con ganancias Kp=1, Ki=0, Kd=0 y límites de salida -50 a 50
 }
 
 PID::PID(float kp, float ki, float kd, float outputMin, float outputMax) {

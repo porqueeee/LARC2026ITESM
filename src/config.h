@@ -3,25 +3,27 @@
 
 #include <Arduino.h>
 
-#define brakespeed 80
+#define brakespeed 100
 #define braketime 20
-#define defaultspeed 125
+#define defaultspeed 200
 
 // ============================================
 // PINES DE MOTORES
 // ============================================
 // Motor Front Left
-#define MOTOR_FR_IN1 6
-#define MOTOR_FR_PWM 7
+#define MOTOR_FR_IN1 7 //controla velocidad y enable
+#define MOTOR_FR_PWM 6 //controla dirección
 
 ///front right
 
-#define MOTOR_FL_IN1 8
-#define MOTOR_FL_PWM 9
+#define MOTOR_FL_IN1 9
+#define MOTOR_FL_PWM 8
                             
 // Motor Rear Right
-#define MOTOR_RR_IN1 44
-#define MOTOR_RR_PWM 46
+#define MOTOR_RR_IN1 46
+#define MOTOR_RR_PWM 44
+
+
 
 // Motor Rear Left
 #define MOTOR_RL_IN1 4
