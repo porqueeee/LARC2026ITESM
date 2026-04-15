@@ -5,7 +5,7 @@
 
 #define brakespeed 80
 #define braketime 20
-#define defaultspeed 100
+#define defaultspeed 125
 
 // ============================================
 // PINES DE MOTORES
