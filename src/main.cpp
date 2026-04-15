@@ -19,7 +19,7 @@ void setup() {
     //cambio de frecuencia timer 3 TCCR3B = (TCCR3B & 0b11111000) | 0x01;
     //cambio de frecuencia timer 4 TCCR4B = (TCCR4B & 0b11111000) | 0x01;
     Serial.begin(9600);
-    Serial.println("Comunicación serial iniciada");
+    Serial.println("Programa Inicializado");
     robot.init(); //inicializa motores, pid y IMU  
     //robot.moveForwardStraight(100,1000
 
@@ -44,11 +44,11 @@ void RunRobot(){
             break;
 
         case ALLING_RIGHT:
-            robot.moveRightUntilRightLine(100);
+            robot.moveRightUntilRightLine(defaultspeed);
             currentState=CLEAR_OBSTACLES;
 
         case CLEAR_OBSTACLES:
-            robot.moveLeftUntilClear(100);
+            robot.moveLeftUntilClear(defaultspeed);
             currentState=COMPLETE;
         case COMPLETE:
             robot.stop();
@@ -57,12 +57,36 @@ void RunRobot(){
             break;
     }
 }
+
+void TestSquare(){
+    robot.moveLeft(defaultspeed,700);
+    delay(200);
+    robot.moveRight(defaultspeed, 700);
+    delay(200);
+    robot.moveForward(defaultspeed,700);
+    delay(200);
+    robot.moveBackward(defaultspeed,700);
+    delay(2000);
+}
+
+void TestSquareStraight(){
+    robot.moveLeftStraight(defaultspeed,700);
+    delay(200);
+    robot.moveRightStraight(defaultspeed, 700);
+    delay(200);
+    robot.moveForwardStraight(defaultspeed,700);
+    delay(200);
+    robot.moveBackwardStraight(defaultspeed,700);
+    delay(2000);
+}
+
+
 void loop() {
     
     //RunRobot();
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
-    robot.moveLeftStraight(100,1000);
+    robot.moveLeftStraight(defaultspeed,1000);
     delay(10000000);
 
 }

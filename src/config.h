@@ -3,7 +3,9 @@
 
 #include <Arduino.h>
 
-
+#define brakespeed 80
+#define braketime 20
+#define defaultspeed 100
 
 // ============================================
 // PINES DE MOTORES
@@ -44,6 +46,7 @@
 #define FL_TRIG 12
 #define FL_ECHO 13
 #define DIST_THRESHOLD 40
+
 
 /* ============================================
 // PINES DE SERVOS (via PCA9685)

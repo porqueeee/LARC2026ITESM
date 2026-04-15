@@ -17,10 +17,11 @@ void LineSensor::init(){
     digitalWrite(FL_TRIG, LOW);
 }
 
+
+//devuelve true si se detecta una línea
 bool LineSensor::readLine(int pin){
     line=analogRead(pin); 
     if(line>LINE_THRESHOLD){
-        Serial.print("Línea detectada");
         return true;
     }
     else{
@@ -28,8 +29,10 @@ bool LineSensor::readLine(int pin){
     }
 }
 
-float LineSensor::readDistance(int trig, int echo){
+//devuelve true si se detecta un objeto a menos de 40cm
+bool LineSensor::readDistance(int trig, int echo){
     t=0;
+    //Toma 10 medidas del ultrasónico
     for(int i=0; i<10;i++){
         digitalWrite(trig, LOW);
         delayMicroseconds(2);
@@ -41,7 +44,7 @@ float LineSensor::readDistance(int trig, int echo){
          
     }
     d = (t/10)/58; 
-    return d;
+    return (d<DIST_THRESHOLD);
 
     
 }

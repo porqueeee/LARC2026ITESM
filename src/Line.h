@@ -5,10 +5,16 @@
 
 class LineSensor{
     public:
+
+    //Inicializa todos los sensores
     void init();
+    //Lee el sensor de línea
     bool readLine(int pin);
+    //guarda el valor del analog read de línea
     int line;
-    float readDistance(int trig, int echo);
+
+    //Lee sensor ultrasónico
+    bool readDistance(int trig, int echo);
 
 };
 
