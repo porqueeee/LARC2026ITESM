@@ -37,6 +37,8 @@ public:
     //Movimiento a la derecha con corrección por PID, 
     void moveRightUntilRightLine(int speed);
 
+    //Movimiento hacia enfrente para llegar al árbol
+    void moveForwardUntilFrontLine(int speed);
 
     // Moverte al siguiente grano de café
     // siguiendo la línea
@@ -52,6 +54,8 @@ public:
     
     // Configuración PID
     void setHeadingPIDGains(float kp, float ki, float kd);  // NUEVO
+
+    void evilstop(int speed);
     
 private:
     float targetHeading;

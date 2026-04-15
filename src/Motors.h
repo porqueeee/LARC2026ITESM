@@ -17,6 +17,7 @@ public:
     void moveRight(int speed, int output);
     void print(int speed, int output);
     void stop();
+    void evilstop(int speed);
     
 private:
     void setMotor(int in1, int speed, int pwm);

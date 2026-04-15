@@ -88,6 +88,13 @@ void Motors::stop() {
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
 }
 
+void Motors::evilstop(int speed) {
+    setMotor(MOTOR_FL_IN1, speed, MOTOR_FL_PWM);
+    setMotor(MOTOR_FR_IN1, speed, MOTOR_FR_PWM);
+    setMotor(MOTOR_RL_IN1, speed, MOTOR_RL_PWM);
+    setMotor(MOTOR_RR_IN1, speed, MOTOR_RR_PWM);
+}
+
 void Motors::print(int speed, int output){
     /*Serial.print("MIN: ");
     Serial.print(speed+output);

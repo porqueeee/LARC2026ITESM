@@ -33,18 +33,22 @@ void setup() {
 void RunRobot(){
     switch(currentState) {
         case INIT:
+            //no sirve realmente porque quiero inicializar todo en el setup
+            // para hacer pruebas, pero así está lindo
             currentState = EXIT_BOX;
             break;
 
         case EXIT_BOX:
+            //Se mueve hacia adelante hasta que detecta la línea trasera, frena en seco
             Serial.print("Exit Box");
             robot.moveForwardUntilBackLine(100);
             delay(1500);
-            currentState = ALLING_RIGHT;
+            currentState = ALIGN_RIGHT;
             break;
 
-        case ALLING_RIGHT:
-            Serial.print("Allign Right");
+        case ALIGN_RIGHT:
+            //Se mueve hacia la derecha hasta llegar a la línea, frena en seco
+            Serial.print("Align Right");
             robot.moveRightUntilRightLine(defaultspeed);
             currentState=CLEAR_OBSTACLES;
 
@@ -52,6 +56,19 @@ void RunRobot(){
             Serial.print("Clear obstacles");
             robot.moveLeftUntilClear(defaultspeed);
             currentState=COMPLETE;
+
+        case REALIGN_RIGHT:
+        //Se mueve hacia la derecha hasta llegar a la línea, frena en seco
+            Serial.print("Realign Right");
+            robot.moveRightUntilRightLine(defaultspeed);
+            currentState=COLLECT_LINE;
+
+        case COLLECT_LINE:
+        //Se mueve hacia adelante hasta llegar a la línea del árbol
+            Serial.print("Get to collect line");
+            robot.moveForwardUntilFrontLine(defaultspeed);
+            currentState=COMPLETE;
+
         case COMPLETE:
             robot.stop();
             break;
@@ -89,9 +106,9 @@ void loop() {
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
     //robot.moveLeftStraight(defaultspeed,1000);
-    //TestSquareStraight();
-    robot.moveLeftUntilClear(defaultspeed);
-    Serial.print("Clear! :)");
-    delay(1000);
+    TestSquareStraight();
+    //robot.moveLeftUntilClear(defaultspeed);
+    //Serial.print("Clear! :)");
+    //delay(1000);
 
 }

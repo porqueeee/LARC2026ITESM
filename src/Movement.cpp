@@ -109,6 +109,35 @@ void Movement::moveRightUntilRightLine(int speed) {
     stop();
 }
 
+//Es lo mismo que moveForwardUntilBackLine pero con los sensores de línea de enfrente
+void Movement::moveForwardUntilFrontLine(int speed){
+    headingPID.reset();
+    while (true) {
+        bool left = Line.readLine(frontLeft);
+        bool right = Line.readLine(frontRight);
+
+        if(left || right){
+            if (left){
+                Serial.print("Izquierda");
+                Serial.println(" ");
+            }
+            if (right){
+                Serial.print("Derecha");
+                Serial.println(" ");
+            }
+            break;
+        }
+        else{
+
+            float correction=calculateHeadingCorrectionPID();
+            motors.moveForward(speed, correction);
+            delay(10);
+        }
+    }
+    moveBackward(brakespeed,20);
+    stop();
+}
+
 void Movement::moveLeftUntilClear(int speed){
     // no lleva delay porque leer el ultrasónico es muy tardado
     headingPID.reset();
@@ -221,4 +250,8 @@ void Movement::moveRight(int speed, unsigned long time) {
 void Movement::stop() {
     motors.stop();
     Serial.println("Robot detenido");
+}
+
+void Movement::evilstop(int speed) {
+    motors.evilstop(speed);
 }
