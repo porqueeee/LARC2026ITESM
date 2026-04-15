@@ -110,5 +110,5 @@ void loop() {
     //robot.moveLeftUntilClear(defaultspeed);
     //Serial.print("Clear! :)");
     //delay(1000);
-    robot.evilstop(defaultspeed);
+    robot.evilstop(-defaultspeed);
 }
