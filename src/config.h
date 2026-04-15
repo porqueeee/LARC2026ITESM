@@ -6,18 +6,13 @@
 #define brakespeed 80
 #define braketime 20
 #define defaultspeed 125
-#define defaultspeed 125
 
 // ============================================
 // PINES DE MOTORES
 // ============================================
-///fornt right
-#define MOTOR_FL_IN1 22 
-#define MOTOR_FL_PWM 2
-                            
 // Motor Front Left
-#define MOTOR_FR_IN1 24
-#define MOTOR_FR_PWM 3
+#define MOTOR_FR_IN1 6
+#define MOTOR_FR_PWM 7
 
 ///front right
 
@@ -25,8 +20,14 @@
 #define MOTOR_FL_PWM 9
                             
 // Motor Rear Right
-#define MOTOR_RR_IN1 28
-#define MOTOR_RR_PWM 7
+#define MOTOR_RR_IN1 44
+#define MOTOR_RR_PWM 46
+
+// Motor Rear Left
+#define MOTOR_RL_IN1 4
+#define MOTOR_RL_PWM 5
+
+
 
 
 // ============================================
@@ -38,15 +39,25 @@
 #define rearRight A4
 // Sensores de línea
 #define LINE_THRESHOLD 150
-#define LINE_DETECTED true
-#define LINE_NOT_DETECTED false
+
 
 
 // ============================================
 // SENSOR ULTRASÓNICO
 // ============================================
-#define FL_TRIG 12
-#define FL_ECHO 13
+#define FR_TRIG 29
+#define FR_ECHO 31
+
+#define FL_TRIG 35
+#define FL_ECHO 33
+
+#define RR_TRIG 27
+#define RR_ECHO 25
+
+#define RL_TRIG 37
+#define RL_ECHO 39
+
+
 #define DIST_THRESHOLD 40
 
 
@@ -128,9 +139,8 @@ enum RobotState {
     EXIT_BOX,
     ALIGN_RIGHT,
     CLEAR_OBSTACLES,
+    REALIGN_RIGHT,
     COLLECT_LINE,
-    RETURN_TO_BASE,
-    DEPOSIT_BEANS,
     COMPLETE,
     ERROR
 };
