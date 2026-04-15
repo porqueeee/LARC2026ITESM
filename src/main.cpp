@@ -19,7 +19,7 @@ void setup() {
     //cambio de frecuencia timer 3 TCCR3B = (TCCR3B & 0b11111000) | 0x01;
     //cambio de frecuencia timer 4 TCCR4B = (TCCR4B & 0b11111000) | 0x01;
     Serial.begin(9600);
-    Serial.println("Comunicación serial iniciada");
+    Serial.println("Programa Inicializado");
     robot.init(); //inicializa motores, pid y IMU  
     //robot.moveForwardStraight(100,1000
 
@@ -33,20 +33,42 @@ void setup() {
 void RunRobot(){
     switch(currentState) {
         case INIT:
+            //no sirve realmente porque quiero inicializar todo en el setup
+            // para hacer pruebas, pero así está lindo
             currentState = EXIT_BOX;
-
             break;
 
         case EXIT_BOX:
-
-            robot.moveForwardUntilBackLine(80);
+            //Se mueve hacia adelante hasta que detecta la línea trasera, frena en seco
+            Serial.print("Exit Box");
+            robot.moveForwardUntilBackLine(100);
             delay(1500);
-            currentState = ALLING_RIGHT;
+            currentState = ALIGN_RIGHT;
             break;
 
-        case ALLING_RIGHT:
-            robot.moveRightUntilRightLine(80);
+        case ALIGN_RIGHT:
+            //Se mueve hacia la derecha hasta llegar a la línea, frena en seco
+            Serial.print("Align Right");
+            robot.moveRightUntilRightLine(defaultspeed);
+            currentState=CLEAR_OBSTACLES;
+
+        case CLEAR_OBSTACLES:
+            Serial.print("Clear obstacles");
+            robot.moveLeftUntilClear(defaultspeed);
             currentState=COMPLETE;
+
+        case REALIGN_RIGHT:
+        //Se mueve hacia la derecha hasta llegar a la línea, frena en seco
+            Serial.print("Realign Right");
+            robot.moveRightUntilRightLine(defaultspeed);
+            currentState=COLLECT_LINE;
+
+        case COLLECT_LINE:
+        //Se mueve hacia adelante hasta llegar a la línea del árbol
+            Serial.print("Get to collect line");
+            robot.moveForwardUntilFrontLine(defaultspeed);
+            currentState=COMPLETE;
+
         case COMPLETE:
             robot.stop();
             break;
@@ -54,8 +76,39 @@ void RunRobot(){
             break;
     }
 }
+
+void TestSquare(){
+    robot.moveLeft(defaultspeed,700);
+    delay(200);
+    robot.moveRight(defaultspeed, 700);
+    delay(200);
+    robot.moveForward(defaultspeed,700);
+    delay(200);
+    robot.moveBackward(defaultspeed,700);
+    delay(2000);
+}
+
+void TestSquareStraight(){
+    robot.moveLeftStraight(defaultspeed,700);
+    delay(200);
+    robot.moveRightStraight(defaultspeed, 700);
+    delay(200);
+    robot.moveForwardStraight(defaultspeed,700);
+    delay(200);
+    robot.moveBackwardStraight(defaultspeed,700);
+    delay(2000);
+}
+
+
 void loop() {
     
-    RunRobot();
+    //RunRobot();
+    //robot.moveLeftUntilClear(80);
+    //robot.moveRightUntilRightLine(100);
+    //robot.moveLeftStraight(defaultspeed,1000);
+    TestSquareStraight();
+    //robot.moveLeftUntilClear(defaultspeed);
+    //Serial.print("Clear! :)");
+    //delay(1000);
 
 }

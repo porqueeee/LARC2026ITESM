@@ -1,5 +1,9 @@
 #include "Motors.h"
 
+/////////////////////////////
+///////NO CAMBIAR ///////////
+////////////////////////////
+
 Motors motors;
 
 void Motors::init() {
@@ -42,11 +46,13 @@ void Motors::setMotor(int in1, int speed, int pwm) {
     
 } 
 
+//Está bien
 void Motors::moveForward(int speed,int output) {
     setMotor(MOTOR_FL_IN1, 0, MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, (speed+output), MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
-    setMotor(MOTOR_RR_IN1, (speed-(output)), MOTOR_RR_PWM);
+    setMotor(MOTOR_RR_IN1, (speed-output), MOTOR_RR_PWM);
+    print(speed,output);
 }
 
 void Motors::moveBackward(int speed, int output) {
@@ -54,20 +60,25 @@ void Motors::moveBackward(int speed, int output) {
     setMotor(MOTOR_FR_IN1, -(speed-output), MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, -(speed+output), MOTOR_RR_PWM);
+    print(speed,output);
 }
 
+//mal
 void Motors::moveLeft(int speed, int output) {
-    setMotor(MOTOR_FL_IN1, (speed+output), MOTOR_FL_PWM);
+    setMotor(MOTOR_FL_IN1, (speed-output), MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, (speed+output), MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
+    print(speed,output);
 }
 
+//Ya está bien
 void Motors::moveRight(int speed, int output) {
     setMotor(MOTOR_FL_IN1, -(speed+output), MOTOR_FL_PWM);
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, -(speed-output), MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
+    print(speed,output);
 }
 
 void Motors::stop() {
@@ -75,4 +86,18 @@ void Motors::stop() {
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
+}
+
+void Motors::evilstop(int speed) {
+    setMotor(MOTOR_FL_IN1, speed, MOTOR_FL_PWM);
+    setMotor(MOTOR_FR_IN1, speed, MOTOR_FR_PWM);
+    setMotor(MOTOR_RL_IN1, speed, MOTOR_RL_PWM);
+    setMotor(MOTOR_RR_IN1, speed, MOTOR_RR_PWM);
+}
+
+void Motors::print(int speed, int output){
+    /*Serial.print("MIN: ");
+    Serial.print(speed+output);
+    Serial.print("MAX: ");
+    Serial.println(speed-output);*/
 }
