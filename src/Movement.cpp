@@ -254,4 +254,5 @@ void Movement::stop() {
 
 void Movement::evilstop(int speed) {
     motors.evilstop(speed);
+    stop();
 }

@@ -6,6 +6,7 @@
 #define brakespeed 80
 #define braketime 20
 #define defaultspeed 125
+#define defaultspeed 125
 
 // ============================================
 // PINES DE MOTORES
@@ -18,10 +19,11 @@
 #define MOTOR_FR_IN1 24
 #define MOTOR_FR_PWM 3
 
-// Motor Rear Left
-#define MOTOR_RL_IN1 26
-#define MOTOR_RL_PWM 6
+///front right
 
+#define MOTOR_FL_IN1 8
+#define MOTOR_FL_PWM 9
+                            
 // Motor Rear Right
 #define MOTOR_RR_IN1 28
 #define MOTOR_RR_PWM 7

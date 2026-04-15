@@ -21,7 +21,7 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Programa Inicializado");
     robot.init(); //inicializa motores, pid y IMU  
-    //robot.moveForwardStraight(100,1000
+    //robot.moveForwardStraight(100,1000)
 
     //robot.moveRightStraight(100,2000);
     //robot.moveForwardStraight(100,2000);
@@ -106,9 +106,9 @@ void loop() {
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
     //robot.moveLeftStraight(defaultspeed,1000);
-    TestSquareStraight();
+    //TestSquare();
     //robot.moveLeftUntilClear(defaultspeed);
     //Serial.print("Clear! :)");
     //delay(1000);
-
+    robot.evilstop(defaultspeed);
 }
