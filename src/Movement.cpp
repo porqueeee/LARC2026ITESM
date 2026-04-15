@@ -81,6 +81,7 @@ void Movement::moveForwardUntilBackLine(int speed) {
             break;
         }
         else{
+
             float correction=calculateHeadingCorrectionPID();
             motors.moveForward(speed, correction);
             delay(10);
@@ -98,6 +99,7 @@ void Movement::moveRightUntilRightLine(int speed) {
             break;
         }
         else{
+            //El pid se calcula dentro de este cliclo while
             float correction=calculateHeadingCorrectionPID();
             motors.moveRight(speed, correction);
             delay(10);
@@ -115,6 +117,7 @@ void Movement::moveLeftUntilClear(int speed){
     while(true){
         stop(); //Detiene los motores
         if(Line.readDistance(FL_TRIG,FL_ECHO)){ //Lee el sensor ultrasónico
+            //usa el pid de la función moveLeftStraight
             moveLeftStraight(defaultspeed,500); //Se mueve con PID por cantidad de tiempo
         }
         else{

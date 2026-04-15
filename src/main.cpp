@@ -83,11 +83,11 @@ void TestSquareStraight(){
 
 void loop() {
     
-    RunRobot();
+    //RunRobot();
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
     //robot.moveLeftStraight(defaultspeed,1000);
-    //TestSquareStraight();
+    TestSquareStraight();
     delay(1000);
 
 }

@@ -52,6 +52,10 @@ void Motors::moveForward(int speed,int output) {
     setMotor(MOTOR_FR_IN1, (speed+output), MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, (speed-output), MOTOR_RR_PWM);
+    Serial.print("MIN: ");
+    Serial.print(speed+output);
+    Serial.print("MIN: ");
+    Serial.println(speed-output);
 }
 
 void Motors::moveBackward(int speed, int output) {
@@ -59,6 +63,10 @@ void Motors::moveBackward(int speed, int output) {
     setMotor(MOTOR_FR_IN1, -(speed-output), MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, 0, MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, -(speed+output), MOTOR_RR_PWM);
+    Serial.print("MIN: ");
+    Serial.print(speed+output);
+    Serial.print("MIN: ");
+    Serial.println(speed-output);
 }
 
 //mal
@@ -67,6 +75,10 @@ void Motors::moveLeft(int speed, int output) {
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, (speed+output), MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
+    Serial.print("MIN: ");
+    Serial.print(speed+output);
+    Serial.print("MIN: ");
+    Serial.println(speed-output);
 }
 
 //Ya está bien
@@ -75,6 +87,10 @@ void Motors::moveRight(int speed, int output) {
     setMotor(MOTOR_FR_IN1, 0, MOTOR_FR_PWM);
     setMotor(MOTOR_RL_IN1, -(speed-output), MOTOR_RL_PWM);
     setMotor(MOTOR_RR_IN1, 0, MOTOR_RR_PWM);
+    Serial.print("MIN: ");
+    Serial.print(speed+output);
+    Serial.print("MIN: ");
+    Serial.println(speed-output);
 }
 
 void Motors::stop() {
