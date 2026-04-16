@@ -95,7 +95,7 @@ void SensorColor::imprimir() {
     Serial.println(value, 2);
 }
 
-void SensorColor::definir() {
+String SensorColor::definir() {
     double hue_grados = hue * 360.0;
     String colorActual = "Desconocido";
 
@@ -133,4 +133,5 @@ void SensorColor::definir() {
         ultimoColor = colorActual; // Guardamos el color actual en la memoria
     }
     */
+    return colorActual;
 }

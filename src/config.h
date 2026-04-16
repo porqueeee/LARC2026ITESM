@@ -105,6 +105,7 @@ enum RobotState {
     CLEAR_OBSTACLES,
     REALIGN_RIGHT,
     COLLECT_LINE,
+    BEAN,
     COMPLETE,
     ERROR
 };

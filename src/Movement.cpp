@@ -1,8 +1,12 @@
 
 #include "Movement.h"
+
 Movement movement;
 extern IMU imu;  
 extern LineSensor Line;
+extern Selector selector;
+extern SensorColor sensorC;
+
 
 void Movement::init() {
     // 1. Inicializar periféricos primero
@@ -247,6 +251,24 @@ void Movement::moveRight(int speed, unsigned long time) {
     stop();
 }  
 
+void Movement::agarrarGrano(){
+    headingPID.reset();
+    updateTargetHeading();
+    //Lee la línea izquierda cada ciclo para evitar salirse de la cancha
+    while(Line.readLine(rearLeft)==false){
+        String color=sensorC.definir(); //lee el sensor de color
+        if(color=="verde"){
+            //si es verde o ninguno (apenas falta calibrar)
+            float correction=calculateHeadingCorrectionPID(); //empieza movimiento hacia
+            motors.moveLeft(defaultspeed, correction); //la izquierda de manera indefinica
+        }
+        else{
+            stop(); //detiene el movimiento 
+            selector.grab(color); //agarra la pelota
+        }
+        delay(10);
+    }
+}
 
 void Movement::stop() {
     motors.stop();

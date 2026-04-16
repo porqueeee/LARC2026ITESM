@@ -2,13 +2,10 @@
 #include "IMU.h"
 #include "Movement.h"
 #include "PID.h"
-#include "SensorColor.h"
 #include "Line.h"
 
 //Todo lo del movimiento - Movement incluye PID, Motors, IMU y config
 Movement robot; //Crea un objeto de la clase Movement  
-
-SensorColor Color; //crea un objeto de la clase Sensor Color
 
 RobotState currentState = INIT; // Estado inicial del robot, se usa en el case switch
 
@@ -69,6 +66,11 @@ void RunRobot(){
         //Se mueve hacia adelante hasta llegar a la línea del árbol
             Serial.print("Get to collect line");
             robot.moveForwardUntilFrontLine(defaultspeed);
+            currentState=BEAN;
+        
+        case BEAN:
+            Serial.print("Getting beans");
+            robot.agarrarGrano();
             currentState=COMPLETE;
 
         case COMPLETE:

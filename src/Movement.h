@@ -6,6 +6,8 @@
 #include "PID.h"  
 #include "config.h"
 #include "Line.h"
+#include "Selector.h"
+#include "SensorColor.h"
 
 //Todas las funciones de movimiento terminan con un stop() de esta misma clase que llama al motors.stop()
 
@@ -39,6 +41,8 @@ public:
 
     //Movimiento hacia enfrente para llegar al árbol
     void moveForwardUntilFrontLine(int speed);
+
+    void agarrarGrano();
 
     // Moverte al siguiente grano de café
     // siguiendo la línea

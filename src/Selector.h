@@ -16,4 +16,5 @@ class Selector{
 };
 
 extern Selector selector;
+
 #endif

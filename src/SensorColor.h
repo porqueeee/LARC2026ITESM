@@ -1,3 +1,6 @@
+#ifndef COLOR_H 
+#define COLOR_H 
+
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_TCS34725.h>
@@ -8,7 +11,7 @@ public:
     bool begin();  
     void leerColor();  
     void imprimir();
-    void definir();
+    String definir();
     void setupI();   
 private:
     Adafruit_TCS34725 tcs;
@@ -26,3 +29,7 @@ private:
     void rgbToHsv();
     void calibrarBlanco();
 };
+
+extern SensorColor sensorC;
+
+#endif
