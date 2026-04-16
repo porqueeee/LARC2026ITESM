@@ -3,6 +3,17 @@
 
 #include <Arduino.h>
 
+// ============================================
+// PINES DE LEDS
+// ============================================
+
+#define blue1 
+#define blue2
+#define yellow
+#define green
+#define red
+#define white
+
 #define brakespeed 100
 #define braketime 20
 #define defaultspeed 200
@@ -22,8 +33,6 @@
 // Motor Rear Right
 #define MOTOR_RR_IN1 46
 #define MOTOR_RR_PWM 44
-
-
 
 // Motor Rear Left
 #define MOTOR_RL_IN1 4
@@ -97,6 +106,8 @@ enum RobotState {
     COMPLETE,
     ERROR
 };
+
+
 
 
 #endif

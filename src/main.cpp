@@ -82,13 +82,17 @@ void RunRobot(){
 void TestUltrasonic(){
     Sensors.readDistance(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO);
     delay(100);
+
+    Sensors.readDistance(RR_TRIG,RR_ECHO, RL_TRIG, RL_ECHO);
+    delay(100);
 }
 
 void TestLine(){
     Serial.print(Sensors.readLine(rearLeft));
     Serial.print(Sensors.readLine(frontLeft));
     Serial.print(Sensors.readLine(rearRight));
-    Serial.print(Sensors.readLine(rearRight));
+    Serial.println(Sensors.readLine(frontRight));
+    delay(100);
 }
 
 void TestSquare(){
@@ -120,7 +124,9 @@ void loop() {
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
     //robot.moveLeftStraight(defaultspeed,1000);
-    TestSquare();
+    //TestSquare();
+    //TestLine();
+    TestUltrasonic();
     //robot.moveLeftUntilClear(defaultspeed);
     //Serial.print("Clear! :)");
     //delay(1000);
