@@ -33,7 +33,7 @@ bool LineSensor::readLine(int pin){
 bool LineSensor::readDistance(int trig, int echo, int trig2, int echo2){
     t=0;
     //Toma 10 medidas del ultrasónico
-    for(int i=0; i<10;i++){
+    for(int i=0; i<5;i++){
         digitalWrite(trig, LOW);
         digitalWrite(trig2, LOW);
         delayMicroseconds(2);

@@ -81,10 +81,8 @@ void RunRobot(){
 
 void TestUltrasonic(){
     Sensors.readDistance(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO);
-    delay(100);
-
-    Sensors.readDistance(RR_TRIG,RR_ECHO, RL_TRIG, RL_ECHO);
-    delay(100);
+    //Sensors.readDistance(RR_TRIG,RR_ECHO, RL_TRIG, RL_ECHO);
+    //delay(100);
 }
 
 void TestLine(){

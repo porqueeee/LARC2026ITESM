@@ -56,13 +56,15 @@
 #define FL_TRIG 29
 #define FL_ECHO 31
 
-#define FR_TRIG 35
-#define FR_ECHO 33
+#define FR_TRIG 27
+#define FR_ECHO 25 
 
-#define RR_TRIG 27
-#define RR_ECHO 25
+#define RR_TRIG 35 ///bien 
+#define RR_ECHO 33
 
-#define RL_TRIG 37
+
+
+#define RL_TRIG 37 //bien
 #define RL_ECHO 39
 
 
