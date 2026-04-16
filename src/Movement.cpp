@@ -95,7 +95,8 @@ void Movement::moveRightUntilRightLine(int speed) {
     headingPID.reset();
     updateTargetHeading();
     while (true) {
-        if(Line.readLine(rearRight)==true){
+        //Creo que me complicaría la vida ponerle dos sensores, porque idealmente el rear right esta siempre prendido aquí
+        if(Line.readLine(frontRight)==true){
             break;
         }
         else{
@@ -145,7 +146,7 @@ void Movement::moveLeftUntilClear(int speed){
 
     while(true){
         stop(); //Detiene los motores
-        if(Line.readDistance(FL_TRIG,FL_ECHO)){ //Lee el sensor ultrasónico
+        if(Line.readDistance(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO)){ //Lee el sensor ultrasónico
             //usa el pid de la función moveLeftStraight
             moveLeftStraight(defaultspeed,500); //Se mueve con PID por cantidad de tiempo
         }

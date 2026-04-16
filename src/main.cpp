@@ -10,9 +10,11 @@ Movement robot; //Crea un objeto de la clase Movement
 
 SensorColor Color; //crea un objeto de la clase Sensor Color
 
-RobotState currentState = INIT; // Estado inicial del robot
+RobotState currentState = INIT; // Estado inicial del robot, se usa en el case switch
 
 #include "IMU.h"
+
+LineSensor Sensors;
 
 
 void setup() {
@@ -75,6 +77,18 @@ void RunRobot(){
         default:
             break;
     }
+}
+
+void TestUltrasonic(){
+    Sensors.readDistance(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO);
+    delay(100);
+}
+
+void TestLine(){
+    Serial.print(Sensors.readLine(rearLeft));
+    Serial.print(Sensors.readLine(frontLeft));
+    Serial.print(Sensors.readLine(rearRight));
+    Serial.print(Sensors.readLine(rearRight));
 }
 
 void TestSquare(){

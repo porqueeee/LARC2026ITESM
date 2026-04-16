@@ -14,7 +14,7 @@ class LineSensor{
     int line;
 
     //Lee sensor ultrasónico
-    bool readDistance(int trig, int echo);
+    bool readDistance(int trig, int echo, int trig1, int echo1);
 
 };
 
