@@ -10,7 +10,6 @@
             "includePath": [
                 "/Users/alanmeade/Desktop/LARC2026ITESM/include",
                 "/Users/alanmeade/Desktop/LARC2026ITESM/src",
-                "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/BohleBots_BNO055/src",
                 "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055",
                 "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055/utility",
@@ -30,7 +29,6 @@
                 "path": [
                     "/Users/alanmeade/Desktop/LARC2026ITESM/include",
                     "/Users/alanmeade/Desktop/LARC2026ITESM/src",
-                    "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/BohleBots_BNO055/src",
                     "/Users/alanmeade/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055",
                     "/Users/alanmeade/Desktop/LARC2026ITESM/.pio/libdeps/mega2560/Adafruit BNO055/utility",

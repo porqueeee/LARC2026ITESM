@@ -1,14 +1,20 @@
 
 #include "Movement.h"
+
 Movement movement;
 extern IMU imu;  
 extern LineSensor Line;
+extern Selector selector;
+extern SensorColor sensorC;
+extern Distance distance;
+
 
 void Movement::init() {
     // 1. Inicializar periféricos primero
     motors.init();
     imu.init(); 
     Line.init();
+    distance.init();
     
     // 2. Inicializar PID de rumbo
     // Kp, Ki, Kd, OutputMin, OutputMax
@@ -32,9 +38,10 @@ void Movement::setHeadingPIDGains(float kp, float ki, float kd) {
     Serial.println(kd);
 }
 
-void Movement::updateTargetHeading() {
+int Movement::updateTargetHeading() {
     targetHeading = imu.getHeading();
     //targetHeading=0;
+    return targetHeading;
 }
 
 
@@ -66,10 +73,10 @@ float Movement::calculateHeadingCorrectionPID() {
 void Movement::moveForwardUntilBackLine(int speed) {
     headingPID.reset();
     while (true) {
-        bool left = Line.readLine(rearLeft);
-        bool right = Line.readLine(rearRight);
+        int left = 0;
+        int right = Line.readLine(rearRight);
 
-        if(left || right){
+        if(left>LINE_THRESHOLD || right>=LINE_THRESHOLD){
             if (left){
                 Serial.print("Izquierda");
                 Serial.println(" ");
@@ -95,7 +102,8 @@ void Movement::moveRightUntilRightLine(int speed) {
     headingPID.reset();
     updateTargetHeading();
     while (true) {
-        if(Line.readLine(rearRight)==true){
+        //Creo que me complicaría la vida ponerle dos sensores, porque idealmente el rear right esta siempre prendido aquí
+        if(Line.readLine(frontRight)==true){
             break;
         }
         else{
@@ -143,9 +151,9 @@ void Movement::moveLeftUntilClear(int speed){
     headingPID.reset();
     updateTargetHeading();
 
-    while(true){
+    for(int i=0; i<MAXMOVEMENT;i++){
         stop(); //Detiene los motores
-        if(Line.readDistance(FL_TRIG,FL_ECHO)){ //Lee el sensor ultrasónico
+        if(distance.obstacle(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO)){ //Lee el sensor ultrasónico
             //usa el pid de la función moveLeftStraight
             moveLeftStraight(defaultspeed,500); //Se mueve con PID por cantidad de tiempo
         }
@@ -246,6 +254,24 @@ void Movement::moveRight(int speed, unsigned long time) {
     stop();
 }  
 
+void Movement::agarrarGrano(){
+    headingPID.reset();
+    updateTargetHeading();
+    //Lee la línea izquierda cada ciclo para evitar salirse de la cancha
+    while(Line.readLine(rearLeft)==false){
+        String color=sensorC.definir(); //lee el sensor de color
+        if(color=="verde"){
+            //si es verde o ninguno (apenas falta calibrar)
+            float correction=calculateHeadingCorrectionPID(); //empieza movimiento hacia
+            motors.moveLeft(defaultspeed, correction); //la izquierda de manera indefinica
+        }
+        else{
+            stop(); //detiene el movimiento 
+            selector.grab(color); //agarra la pelota
+        }
+        delay(10);
+    }
+}
 
 void Movement::stop() {
     motors.stop();
@@ -254,4 +280,5 @@ void Movement::stop() {
 
 void Movement::evilstop(int speed) {
     motors.evilstop(speed);
+    stop();
 }

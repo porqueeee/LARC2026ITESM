@@ -2,39 +2,35 @@
 #include "IMU.h"
 #include "Movement.h"
 #include "PID.h"
-#include "SensorColor.h"
 #include "Line.h"
+#include "SensorColor.h"
+#include "IMU.h"
 
 //Todo lo del movimiento - Movement incluye PID, Motors, IMU y config
 Movement robot; //Crea un objeto de la clase Movement  
 
-SensorColor Color; //crea un objeto de la clase Sensor Color
+RobotState currentState = INIT; // Estado inicial del robot, se usa en el case switch
 
-RobotState currentState = INIT; // Estado inicial del robot
+LineSensor line;
 
-#include "IMU.h"
+Distance ultrasonic;
+
+SensorColor sensorColor;
 
 
 void setup() {
-    //cambio de frecuencia timer 3 TCCR3B = (TCCR3B & 0b11111000) | 0x01;
-    //cambio de frecuencia timer 4 TCCR4B = (TCCR4B & 0b11111000) | 0x01;
+
     Serial.begin(9600);
     Serial.println("Programa Inicializado");
     robot.init(); //inicializa motores, pid y IMU  
-    //robot.moveForwardStraight(100,1000
-
-    //robot.moveRightStraight(100,2000);
-    //robot.moveForwardStraight(100,2000);
-    //robot.moveLeftStraight(100,200);
-
-
 }
 
+//TODO LO DEL ROBOT
 void RunRobot(){
     switch(currentState) {
         case INIT:
             //no sirve realmente porque quiero inicializar todo en el setup
-            // para hacer pruebas, pero así está lindo
+            // para hacer pruebas, pero así puedo incorporar lo de los botones luego
             currentState = EXIT_BOX;
             break;
 
@@ -67,16 +63,49 @@ void RunRobot(){
         //Se mueve hacia adelante hasta llegar a la línea del árbol
             Serial.print("Get to collect line");
             robot.moveForwardUntilFrontLine(defaultspeed);
+            currentState=BEAN;
+        
+        case BEAN:
+            Serial.print("Getting beans");
+            robot.agarrarGrano();
             currentState=COMPLETE;
 
         case COMPLETE:
             robot.stop();
             break;
+
         default:
             break;
     }
 }
 
+//Prueba dos sensores ultrasónicos (no la he probado)
+void TestUltrasonic(){
+    Serial.print("Front Left:  ");
+    Serial.print(ultrasonic.readSensor(FL_TRIG,FL_ECHO));
+
+    Serial.print("   Front Right:  ");
+    Serial.print(ultrasonic.readSensor(FR_TRIG,FR_ECHO));
+
+    Serial.print("   Rear Left:    ");
+    Serial.println(ultrasonic.readSensor(FR_TRIG,FR_ECHO));
+    //delay(100);
+}
+
+//Prueba todos los de línea a la vez (Si jala)
+void TestLine(){
+    Serial.print("|   atras izquierda: ");
+    Serial.print(line.readLine(rearLeft));
+    Serial.print("|  frente izquierda: ");
+    Serial.print(line.readLine(frontLeft));
+    Serial.print("|  atras derecha: ");
+    Serial.print(line.readLine(rearRight));
+    Serial.print("|  frente derecha ");
+    Serial.println(line.readLine(frontRight));
+    delay(100);
+}
+
+//Prueba los movimientos sin PID
 void TestSquare(){
     robot.moveLeft(defaultspeed,700);
     delay(200);
@@ -88,6 +117,7 @@ void TestSquare(){
     delay(2000);
 }
 
+//Prueba los movimientos con PID
 void TestSquareStraight(){
     robot.moveLeftStraight(defaultspeed,700);
     delay(200);
@@ -106,9 +136,19 @@ void loop() {
     //robot.moveLeftUntilClear(80);
     //robot.moveRightUntilRightLine(100);
     //robot.moveLeftStraight(defaultspeed,1000);
-    TestSquareStraight();
+    //TestSquare();
+    //TestLine();
+    //TestUltrasonic();
     //robot.moveLeftUntilClear(defaultspeed);
     //Serial.print("Clear! :)");
-    //delay(1000);
-
+    //robot.moveForwardUntilBackLine(255);
+    //Serial.print("|  atras derecha: ");
+    //Serial.print(line.readLine(rearRight));
+    //delay(1000000000);
+    //robot.evilstop(defaultspeed);
+    //TestSquareStraight();
+    //robot.moveForwardUntilBackLine(100);
+    //delay(500);
+    Serial.print(robot.updateTargetHeading());
+    delay(200);
 }
