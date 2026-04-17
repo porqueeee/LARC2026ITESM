@@ -42,13 +42,13 @@
 // ============================================
 // PSENSOR DE LÍNEA (TCRT5000)
 // ============================================
-#define frontLeft A1
-#define frontRight A2
-#define rearRight A3
-#define rearLeft A4
+#define frontLeft A4
+#define frontRight A3
+#define rearRight A2
+#define rearLeft A1
 
 // Sensores de línea
-#define LINE_THRESHOLD 150
+#define LINE_THRESHOLD 31
 
 // ============================================
 // SENSOR ULTRASÓNICO
@@ -56,12 +56,11 @@
 #define FL_TRIG 29
 #define FL_ECHO 31
 
-#define FR_TRIG 27
-#define FR_ECHO 25 
+//#define FR_TRIG 27 //NO JALAN LOS PINES
+//#define FR_ECHO 25 
 
-#define RR_TRIG 35 ///bien 
-#define RR_ECHO 33
-
+#define FR_TRIG 35 ///bien 
+#define FR_ECHO 33
 
 
 #define RL_TRIG 37 //bien
@@ -69,6 +68,9 @@
 
 
 #define DIST_THRESHOLD 40
+
+#define MAXMOVEMENT 20 //cantidad de veces que el robot se puede mover de lado a lado en intervalos de500 segundos
+//para no salirse de la cancha y así
 
 
 /* ============================================

@@ -8,6 +8,7 @@
 #include "Line.h"
 #include "Selector.h"
 #include "SensorColor.h"
+#include "Distance.h"
 
 //Todas las funciones de movimiento terminan con un stop() de esta misma clase que llama al motors.stop()
 
@@ -43,15 +44,6 @@ public:
     void moveForwardUntilFrontLine(int speed);
 
     void agarrarGrano();
-
-    // Moverte al siguiente grano de café
-    // siguiendo la línea
-    /*
-    void moveToNextBean(int speed, int level=1);
-
-    //Moverte a las cajas de depósito
-    void moveToDepositBox(int speed, int boxNumber);
-    */
 
     // Parada
     void stop();

@@ -6,6 +6,7 @@ extern IMU imu;
 extern LineSensor Line;
 extern Selector selector;
 extern SensorColor sensorC;
+extern Distance distance;
 
 
 void Movement::init() {
@@ -13,6 +14,7 @@ void Movement::init() {
     motors.init();
     imu.init(); 
     Line.init();
+    distance.init();
     
     // 2. Inicializar PID de rumbo
     // Kp, Ki, Kd, OutputMin, OutputMax
@@ -70,10 +72,10 @@ float Movement::calculateHeadingCorrectionPID() {
 void Movement::moveForwardUntilBackLine(int speed) {
     headingPID.reset();
     while (true) {
-        bool left = Line.readLine(rearLeft);
-        bool right = Line.readLine(rearRight);
+        int left = 0;
+        int right = Line.readLine(rearRight);
 
-        if(left || right){
+        if(left>LINE_THRESHOLD || right>=LINE_THRESHOLD){
             if (left){
                 Serial.print("Izquierda");
                 Serial.println(" ");
@@ -148,9 +150,9 @@ void Movement::moveLeftUntilClear(int speed){
     headingPID.reset();
     updateTargetHeading();
 
-    while(true){
+    for(int i=0; i<MAXMOVEMENT;i++){
         stop(); //Detiene los motores
-        if(Line.readDistance(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO)){ //Lee el sensor ultrasónico
+        if(distance.obstacle(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO)){ //Lee el sensor ultrasónico
             //usa el pid de la función moveLeftStraight
             moveLeftStraight(defaultspeed,500); //Se mueve con PID por cantidad de tiempo
         }
