@@ -4,13 +4,12 @@
 #include "PID.h"
 #include "Line.h"
 #include "SensorColor.h"
+#include "IMU.h"
 
 //Todo lo del movimiento - Movement incluye PID, Motors, IMU y config
 Movement robot; //Crea un objeto de la clase Movement  
 
 RobotState currentState = INIT; // Estado inicial del robot, se usa en el case switch
-
-#include "IMU.h"
 
 LineSensor line;
 
@@ -25,7 +24,6 @@ void setup() {
     Serial.println("Programa Inicializado");
     robot.init(); //inicializa motores, pid y IMU  
 }
-
 
 //TODO LO DEL ROBOT
 void RunRobot(){
@@ -83,7 +81,14 @@ void RunRobot(){
 
 //Prueba dos sensores ultrasónicos (no la he probado)
 void TestUltrasonic(){
-    ultrasonic.obstacle(FL_TRIG,FL_ECHO, FR_TRIG, FR_ECHO);
+    Serial.print("Front Left:  ");
+    Serial.print(ultrasonic.readSensor(FL_TRIG,FL_ECHO));
+
+    Serial.print("   Front Right:  ");
+    Serial.print(ultrasonic.readSensor(FR_TRIG,FR_ECHO));
+
+    Serial.print("   Rear Left:    ");
+    Serial.println(ultrasonic.readSensor(FR_TRIG,FR_ECHO));
     //delay(100);
 }
 
@@ -140,8 +145,10 @@ void loop() {
     //Serial.print("|  atras derecha: ");
     //Serial.print(line.readLine(rearRight));
     //delay(1000000000);
-    robot.evilstop(defaultspeed);
+    //robot.evilstop(defaultspeed);
     //TestSquareStraight();
     //robot.moveForwardUntilBackLine(100);
     //delay(500);
+    Serial.print(robot.updateTargetHeading());
+    delay(200);
 }

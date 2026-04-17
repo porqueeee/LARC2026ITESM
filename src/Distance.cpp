@@ -10,11 +10,6 @@ void Distance::init(){
     pinMode(FR_TRIG,OUTPUT);
     pinMode(FR_ECHO,INPUT);
     digitalWrite(FR_TRIG,LOW);
-    
-
-    pinMode(RL_TRIG,OUTPUT);
-    pinMode(RL_ECHO,INPUT);
-    digitalWrite(RL_TRIG,LOW);
 
 }
 

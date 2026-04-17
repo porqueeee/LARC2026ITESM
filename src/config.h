@@ -16,7 +16,7 @@
 
 #define brakespeed 100
 #define braketime 20
-#define defaultspeed 200
+#define defaultspeed 254
 
 // ============================================
 // PINES DE MOTORES NO MOVER NUNCA >:(
@@ -53,18 +53,18 @@
 // ============================================
 // SENSOR ULTRASÓNICO
 // ============================================
-#define FL_TRIG 29
-#define FL_ECHO 31
+//#define FL_TRIG 29
+//#define FL_ECHO 31
 
 //#define FR_TRIG 27 //NO JALAN LOS PINES
 //#define FR_ECHO 25 
 
-#define FR_TRIG 35 ///bien 
+#define FR_TRIG 35 ///Si jala 04/16/2026
 #define FR_ECHO 33
 
 
-#define RL_TRIG 37 //bien
-#define RL_ECHO 39
+#define FL_TRIG 37 ///Si jala 04/16/2026
+#define FL_ECHO 39
 
 
 #define DIST_THRESHOLD 40

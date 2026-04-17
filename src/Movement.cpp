@@ -38,9 +38,10 @@ void Movement::setHeadingPIDGains(float kp, float ki, float kd) {
     Serial.println(kd);
 }
 
-void Movement::updateTargetHeading() {
+int Movement::updateTargetHeading() {
     targetHeading = imu.getHeading();
     //targetHeading=0;
+    return targetHeading;
 }
 
 

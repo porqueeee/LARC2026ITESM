@@ -51,7 +51,8 @@ public:
     // Configuración PID
     void setHeadingPIDGains(float kp, float ki, float kd);  // NUEVO
 
-    void evilstop(int speed);
+    void evilstop(int speed);    
+    int updateTargetHeading();
     
 private:
     float targetHeading;
@@ -59,7 +60,7 @@ private:
     
 
     //Define el ángulo actual como el nuevo "heading"
-    void updateTargetHeading();
+
     //int calculateHeadingCorrection();
 
     //Llama al PID y calcula un offset para la velocidad
